@@ -4,7 +4,7 @@
 // Autores: Roberto y Sebas
 
 void añadirNumero(int * arrNums,int añadido);
-int comparar(const void * a, const void * b);
+int comparar(int *arrNums, int posicionIteracion, int num1, int num2);
 
 int main(){
 	int input;
@@ -25,6 +25,12 @@ int main(){
 	printf("Resultado:\n");
 	for (int i = 0; i < input; i++){
 		printf("Numero %d:%d\n",i + 1,arrNums[i]);
+
+		if(i == 0){
+			continue;
+		}
+
+		comparar(arrNums, i, arrNums[i -1], arrNums[i]);
 	}	
 
 	free(arrNums);
@@ -44,10 +50,22 @@ void añadirNumero(int * arrNums,int añadido){
 		printf("Número %d: ", i + 1);
 		scanf("%d", &numeros);
 		arrNums[i] = numeros;
+
 	}
+
 }
 
 
-int comparar(const void * a, const void * b){
-	return (*(int*)a - *(int*)b);
+int comparar(int *arrNums, int posicionIteracion, int num1, int num2){
+	int resultadoComparacion = num1 - num2;
+
+	if (resultadoComparacion > 0){
+		int aux = arrNums[posicionIteracion];
+		arrNums[posicionIteracion] = num2;
+
+		arrNums[posicionIteracion - 1] = num1;
+
+	}
+
+
 }
