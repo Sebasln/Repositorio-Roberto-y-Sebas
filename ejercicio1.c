@@ -4,7 +4,7 @@
 // Autores: Roberto y Sebas
 
 void añadirNumero(int * arrNums,int añadido);
-int comparar(int *arrNums, int posicionIteracion, int num1, int num2);
+int comparar(int * arrNums, int cantidad);
 
 int main(){
 	int input;
@@ -21,16 +21,10 @@ int main(){
 	}
 
 	añadirNumero(arrNums, input);
-
+	comparar(arrNums, input);
 	printf("Resultado:\n");
 	for (int i = 0; i < input; i++){
 		printf("Numero %d:%d\n",i + 1,arrNums[i]);
-
-		if(i == 0){
-			continue;
-		}
-
-		comparar(arrNums, i, arrNums[i -1], arrNums[i]);
 	}	
 
 	free(arrNums);
@@ -50,22 +44,19 @@ void añadirNumero(int * arrNums,int añadido){
 		printf("Número %d: ", i + 1);
 		scanf("%d", &numeros);
 		arrNums[i] = numeros;
-
 	}
-
 }
 
 
-int comparar(int *arrNums, int posicionIteracion, int num1, int num2){
-	int resultadoComparacion = num1 - num2;
-
-	if (resultadoComparacion > 0){
-		int aux = arrNums[posicionIteracion];
-		arrNums[posicionIteracion] = num2;
-
-		arrNums[posicionIteracion - 1] = num1;
-
+int comparar(int * arrNums, int cantidad){
+	int aux = 0;
+	for (int i = 0; i < cantidad; i++){
+		for(int j = i + 1; j < cantidad; j++){
+			if (arrNums[i] > arrNums[j]){
+				aux = arrNums[i];
+				arrNums[i] = arrNums[j];
+				arrNums[j] = aux;
+			}
+		}
 	}
-
-
 }
