@@ -1,91 +1,123 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-//TO DO: Migrar la función del qsort a este código e invertirla. De ahí seguir xd
-#define MAX_NOMBRE 40
-#define MAX_APELLIDO 40
-// Autores: Roberto y Sebas
+#define MAX_NOMBRE 20
+#define MAX_APELLIDO 20
+#define MAX_NOTA 10
 
 typedef struct{
-	char nombre[MAX_NOMBRE];
-	char apellido[MAX_APELLIDO];
-	float nota;
-} Estudiante;
 
-void añadirEstudiante(Estudiante * Estudiantes, int cantidad);
-void imprimirEstudiantes(int * agarrPosicion, float * arrNota, Estudiante * Estudiantes, int cantidad);
-int comparar(const void * a, const void * b);
-void notas(int * arrPosicion, float* arrNota, Estudiante * Estudiantes, int cantidad);
+        char Nombre[MAX_NOMBRE];
+        char Apellido[MAX_APELLIDO];
+        float Nota;
+
+}Estudiante;
 
 int main(){
-	int numEstudiantes;
 
-	printf("¿Cuántos estudiantes quieres introducir? ");
-	scanf("%d", &numEstudiantes);
+int numero_estudiantes;
 
-	float arrNotas[numEstudiantes];
-	int arrPosicionNotas[numEstudiantes];
+int valor_retorno;
 
-	Estudiante * Estudiantes = (Estudiante *) malloc(numEstudiantes * sizeof(Estudiante));
-	añadirEstudiante(Estudiantes, numEstudiantes);
-	// qsort(, numEstudiantes, sizeof(Estudiante), comparar);
+int aux;
 
-	notas(arrPosicionNotas, arrNotas, Estudiantes, numEstudiantes);
+char aux2[MAX_APELLIDO];
 
-	imprimirEstudiantes(arrPosicionNotas, arrNotas, Estudiantes, numEstudiantes);
+char aux3[MAX_NOMBRE];
 
-	free(Estudiantes);
-	return 0;
-}
+do{
+        printf("Ingrese el número de alumnos a introducir: ");
+        valor_retorno = scanf("%d", &numero_estudiantes);
 
-void añadirEstudiante(Estudiante * Estudiantes, int cantidad){
-	for (int i = 0; i < cantidad; i++){
-		printf("Nombre:\n");
-		scanf(" %[^\n]", Estudiantes[i].nombre);
+        while(getchar() != '\n');
+                if (valor_retorno == 0){
+                                printf("Error, el dato introducido no es un número, inténtelo de nuevo. \n");
+        }
 
-		printf("Apellido:\n");
-		scanf(" %[^\n]", Estudiantes[i].apellido);
+}while (valor_retorno == 0);
 
-		printf("Nota:\n");
-		scanf("%f", &Estudiantes[i].nota);
-	}
+Estudiante *Estudiantes = (Estudiante*) malloc(numero_estudiantes * sizeof(Estudiante));
+
+if (Estudiantes == NULL){
+
+        printf("ERROR, no se puede asignar memoria \n");
 
 }
 
-void imprimirEstudiantes(int * arrPosicion, float * arrNota, Estudiante * Estudiantes, int cantidad){
-	printf("Estos son los estudiantes ordenados por nota: \n");
-	for(int i = 0; i < cantidad; i++){
-		printf("Nombre: %s \n Apellido: %s\n Nota: %f\n", Estudiantes[arrPosicion[i]].nombre, Estudiantes[arrPosicion[i]].apellido, Estudiantes[arrPosicion[i]].nota);
+for (int i = 0; i < numero_estudiantes; i++){
 
-	}
+        printf("Introduzca el nombre del estudiante: ");
+        scanf(" %[^\n]", Estudiantes[i].Nombre);
 
-	// printf("Estos son los estudiantes ordenados por nota: \n");
+        printf("Introduzca el apellido del estudiante: ");
+        scanf(" %[^\n]", Estudiantes[i].Apellido);
 
-	for(int i = 0; i < cantidad; i++){
-		// arrNotas, 
+do{
+        printf("Introduzca la nota del estudiante: ");
+        valor_retorno = scanf("%f",&Estudiantes[i].Nota);
 
+        while (getchar() != '\n');
+                if (valor_retorno == 0){
+                        printf("Error, el dato introducido no es un número, inténtelo de nuevo. \n");
+        }
 
-	}
+}while (valor_retorno == 0);
+
 }
 
-int comparar(const void * a, const void * b){
-	return (*(int*)a) - (*(int*)b);
+for (int i = 0; i < numero_estudiantes; i++){
+
+        printf("%s %s Nota: %2.f \n", Estudiantes[i].Nombre, Estudiantes[i].Apellido, Estudiantes[i].Nota);
+
+}
+printf("\n");
+
+printf("Aqui abajo se muestran los alumnos ingresados por orden (nota y orden alfabético): \n");
+
+printf("Por orden de nota (Mayor a Menor): \n");
+
+
+
+for (int i = 0; i < numero_estudiantes; i++){
+        for (int j = i + 1; j < numero_estudiantes; j++){
+
+                if(Estudiantes[i].Nota < Estudiantes[j].Nota){
+                        aux = Estudiantes[i].Nota;
+                        strcpy (aux2, Estudiantes[i].Apellido);
+                        Estudiantes[i].Nota = Estudiantes[j].Nota;
+                        strcpy (Estudiantes[i].Apellido, Estudiantes[j].Apellido);
+                        Estudiantes[j].Nota = aux;
+                        strcpy (Estudiantes[j].Apellido, aux2);
+
+                }
+        }
 }
 
-// void notas(int *arrPosicion, float * arrNota, Estudiante * Estudiantes, int cantidad){
-// 	int aux;
-
-// 	for(int i = 0; i < cantidad; i++){
-// 		arrNota[i] = Estudiantes[i].nota;
-// 		arrPosicion[i] = cantidad - i;
-// 	}
-// 	qsort(arrNota, cantidad, sizeof(float), comparar);
+for (int i = 0; i < numero_estudiantes; i++){
+        printf(" %s, %2.f, \n", Estudiantes[i].Nombre,Estudiantes[i].Nota);
+}
 
 
-// 	// arrNota[]
+printf("\n");
 
-// 	printf("Notas de mayor a menor:\n");
-// 	for(int i = 0; i < cantidad; i++){
-// 		printf("Nota %d: %.2f\n", i +1,  arrNota[i]);
-// 	}
-// }
+printf("Por orden de apellido: \n");
+
+for (int i = 0; i < numero_estudiantes; i++){
+        for (int j = i + 1; j < numero_estudiantes; j++){
+
+                if (strcmp(Estudiantes[i].Apellido, Estudiantes[j].Apellido) > 0){
+                        strcpy (aux2, Estudiantes[i].Apellido);
+                        strcpy (Estudiantes[i].Apellido, Estudiantes[j].Apellido);
+                        strcpy (Estudiantes[j].Apellido, aux2);
+                }
+        }
+}
+
+for (int i = 0; i < numero_estudiantes; ++i){
+        printf("%s \n", Estudiantes[i].Apellido);
+}
+
+        free(Estudiantes);
+        return 0;
+}
