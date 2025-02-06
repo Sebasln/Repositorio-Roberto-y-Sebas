@@ -50,10 +50,10 @@ if (Estudiantes == NULL){
 for (int i = 0; i < numero_estudiantes; i++){
 
         printf("Introduzca el nombre del estudiante: ");
-        scanf("%s", Estudiantes[i].Nombre);
+        scanf(" %[^\n]", Estudiantes[i].Nombre);
 
         printf("Introduzca el apellido del estudiante: ");
-        scanf("%s", Estudiantes[i].Apellido);
+        scanf(" %[^\n]", Estudiantes[i].Apellido);
 
 do{
         printf("Introduzca la nota del estudiante: ");
