@@ -48,7 +48,7 @@ char cifrado_cesar(char string, int clave){
 	string_ascii = string;
 
 	while(clave > 26){
-		clave -= 26;	
+		clave -= 26;	 
 		}
 	if(isupper(string)){
 		
