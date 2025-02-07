@@ -13,7 +13,7 @@ int main(){
 	scanf("%d", &input);
 
 
-	int *arrNums = (int *) malloc(input * sizeof(int));
+	int *arrNums = (int *) malloc(input * sizeof(int)); //Creamos la memoria dinámica la cual alamcenará los numeros a ordenar
 
 	if (arrNums == NULL){
 		printf("Error.\n");
@@ -33,14 +33,14 @@ int main(){
 
 void añadirNumero(int * arrNums,int añadido){
 	int numeros = 0;
-	if (añadido < 1) {
-		printf("Invalid quantity.\n");
-		return;
+	if (añadido < 1) {  //Comprobamos que la cantidad a ordenar es mayor que 1 y en caso de no serla terminamos el programa
+		printf("Error la cantidad es muy pequeña.\n");
+		exit(1);
 	}
 
 	printf("Introduce los números:\n");
 
-	for (int i = 0; i < añadido; ++i){
+	for (int i = 0; i < añadido; ++i){  //Bucle para rellenar el array
 		printf("Número %d: ", i + 1);
 		scanf("%d", &numeros);
 		arrNums[i] = numeros;
@@ -52,7 +52,7 @@ int comparar(int * arrNums, int cantidad){
 	int aux = 0;
 	for (int i = 0; i < cantidad; i++){
 		for(int j = i + 1; j < cantidad; j++){
-			if (arrNums[i] > arrNums[j]){
+			if (arrNums[i] > arrNums[j]){   //Creamos una condición en la cual si i(el primer numero) es mayor que j(segundo numero que es un bucle que empieza una posición por encima de i siempre) se intercambien las posición haciendo que el primero sea el mas pequeño y luego con el segundo numero.
 				aux = arrNums[i];
 				arrNums[i] = arrNums[j];
 				arrNums[j] = aux;
